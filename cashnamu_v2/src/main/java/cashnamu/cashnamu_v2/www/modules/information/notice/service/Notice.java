@@ -30,7 +30,7 @@ import lombok.Setter;
 public class Notice {
 
 	@Id @GeneratedValue
-	private int idx;
+	private Long idx;
 	
 	@Column(length = 100)
 	private String title;
