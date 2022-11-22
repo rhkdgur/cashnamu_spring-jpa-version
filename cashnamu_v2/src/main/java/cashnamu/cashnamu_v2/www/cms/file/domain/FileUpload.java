@@ -1,4 +1,4 @@
-package cashnamu.cashnamu_v2.www.cms.file.service;
+package cashnamu.cashnamu_v2.www.cms.file.domain;
 
 import java.util.Date;
 
@@ -9,30 +9,37 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name="cms_file_upload")
-@Getter @Setter
+@Getter
 public class FileUpload{
 
+	/**일련번호*/
 	@Id @GeneratedValue
 	private Long sno;
 	
+	/**파일경로 코드*/
 	@Column(length = 80)
 	private String code;
 	
+	/**제목*/
 	@Column(length = 100)
 	private String title;
 	
+	/**짧은 경로*/
 	@Column(length = 100)
 	private String shortPath;
 	
+	/**전체 경로*/
 	@Column(length = 100)
 	private String path;
 	
+	/**사용여부*/
 	@Column(columnDefinition = "char",length = 1)
 	private String useYn;
 	
@@ -41,4 +48,14 @@ public class FileUpload{
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifyDate;
+	
+	
+	@Builder
+	public FileUpload(String code, String title, String shortPath, String path, String useYn) {
+		this.code = code;
+		this.title = title;
+		this.shortPath = shortPath;
+		this.path = path;
+		this.useYn = useYn;
+	}
 }

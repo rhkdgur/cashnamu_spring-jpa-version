@@ -1,8 +1,9 @@
-package cashnamu.cashnamu_v2.www.auth.admin.login;
+package cashnamu.cashnamu_v2.www.auth.admin;
 
 import javax.servlet.http.HttpSession;
 
-import cashnamu.cashnamu_v2.www.auth.admin.service.Admin;
+import cashnamu.cashnamu_v2.www.auth.admin.domain.Admin;
+import cashnamu.cashnamu_v2.www.auth.admin.dto.AdminDTO;
 
 /**
  * 
@@ -19,8 +20,8 @@ import cashnamu.cashnamu_v2.www.auth.admin.service.Admin;
 public class AdminSession {
 	private static String SessionId = "_cashnamu_admin";
 	
-	public static void CreateAdminSession(HttpSession session,Admin admin) {
-		session.setAttribute(SessionId, admin);
+	public static void CreateAdminSession(HttpSession session,AdminDTO adminDTO) {
+		session.setAttribute(SessionId, adminDTO);
 	}
 	
 	public static boolean isAuthorites(HttpSession session) {
@@ -31,7 +32,7 @@ public class AdminSession {
 		session.removeAttribute(SessionId);
 	}
 	
-	public static Admin getAdminSession(HttpSession session) {
-		return (Admin) session.getAttribute(SessionId);
+	public static AdminDTO getAdminSession(HttpSession session) {
+		return (AdminDTO) session.getAttribute(SessionId);
 	}
 }

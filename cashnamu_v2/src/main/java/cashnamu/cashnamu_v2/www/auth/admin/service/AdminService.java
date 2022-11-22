@@ -1,11 +1,14 @@
 package cashnamu.cashnamu_v2.www.auth.admin.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cashnamu.cashnamu_v2.www.auth.admin.domain.Admin;
+import cashnamu.cashnamu_v2.www.auth.admin.dto.AdminDTO;
 import cashnamu.cashnamu_v2.www.auth.admin.repository.AdminRepository;
 
 @Service
@@ -15,12 +18,13 @@ public class AdminService {
 	private AdminRepository adminRepository;
 	
 	@Transactional
-	public Admin insert(Admin admin) {
+	public AdminDTO insert(AdminDTO adminDTO) {
 		
+		Admin admin = adminDTO.toEntity();
 		if(!MsgValidateMemberType.NONE.equals(validateJoinAdmin(admin))) {
 			return null;
 		}
-		return adminRepository.save(admin);
+		return new AdminDTO(adminRepository.save(admin));
 	}
 	
 	/**
@@ -29,8 +33,9 @@ public class AdminService {
 	 * @return
 	 */
 	@Transactional
-	public Page<Admin> findByAdmins(Pageable pageable){
-		return adminRepository.findAll(pageable);
+	public List<AdminDTO> findByAdmins(){
+		List<Admin> list = adminRepository.findAll();
+		return list.stream().map(m->new AdminDTO(m.getAdminId(),m.getAdminPw(),m.getAdminName(),m.getAccess(),m.getPageAccess(),m.getCreateDate())).collect(Collectors.toList());
 	}
 	
 	/**
@@ -39,16 +44,18 @@ public class AdminService {
 	 * @return
 	 */
 	@Transactional
-	public Admin findById(Admin admin) {
-		return adminRepository.findById(admin.getAdminId()).get();
+	public AdminDTO findById(AdminDTO adminDTO) {
+		Admin admin = adminDTO.toEntity();
+		return new AdminDTO(adminRepository.findById(admin.getAdminId()).get());
 	}
 	
 	/**수정 처리*/
 	@Transactional
-	public Admin update(Admin admin) {
+	public AdminDTO update(AdminDTO adminDTO) {
+		Admin admin = adminDTO.toEntity();
 		Admin prev = adminRepository.findById(admin.getAdminId()).get();
 		prev = admin;
-		return adminRepository.save(prev);
+		return new AdminDTO(adminRepository.save(prev));
 	}
 	
 	/**

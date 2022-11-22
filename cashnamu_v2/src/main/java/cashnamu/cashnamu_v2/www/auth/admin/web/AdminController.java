@@ -1,13 +1,12 @@
 package cashnamu.cashnamu_v2.www.auth.admin.web;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.support.SessionStatus;
 
-import cashnamu.cashnamu_v2.www.auth.admin.login.AdminSession;
-import cashnamu.cashnamu_v2.www.auth.admin.service.Admin;
+import cashnamu.cashnamu_v2.www.auth.admin.AdminSession;
+import cashnamu.cashnamu_v2.www.auth.admin.dto.AdminDTO;
 import cashnamu.cashnamu_v2.www.auth.admin.service.AdminService;
 import cashnamu.cashnamu_v2.www.auth.util.SHA256TypeHandler;
 
@@ -28,22 +27,22 @@ public class AdminController {
 	
 	
 	@GetMapping("admin")
-	public Page<Admin> selectAdminList(Admin admin,
-								  @RequestParam Map<String,String> paramUtil,
-								  Pageable pageable) throws Exception {		
-		return adminService.findByAdmins(pageable);
+	public List<AdminDTO> selectAdminList(AdminDTO adminDTO,
+								  @RequestParam Map<String,String> paramUtil
+								  ) throws Exception {		
+		return adminService.findByAdmins();
 	}
 	
 	@GetMapping(value="/admin/view")
-	public Admin selectAdmin(@RequestBody Admin admin,SessionStatus status) throws Exception {		
-		return adminService.findById(admin);
+	public AdminDTO selectAdmin(@RequestBody AdminDTO adminDTO,SessionStatus status) throws Exception {		
+		return adminService.findById(adminDTO);
 	}
 	
 	@PostMapping(value="/admin/create/action")
-	public Map<String,String> createAdmin(@RequestBody Admin admin,SessionStatus status) throws Exception {
+	public Map<String,String> createAdmin(@RequestBody AdminDTO adminDTO,SessionStatus status) throws Exception {
 		Map<String,String> map = new HashMap<>();
-		admin = adminService.insert(admin);
-		if(admin == null) {
+		adminDTO = adminService.insert(adminDTO);
+		if(adminDTO == null) {
 			map.put("result", "fail");
 			return map;
 		}
@@ -53,12 +52,12 @@ public class AdminController {
 	}
 	
 	@PostMapping(value="/admin/update/action")
-	public Map<String,String> updateAdmin(@RequestBody Admin admin,SessionStatus status) throws Exception {
+	public Map<String,String> updateAdmin(@RequestBody AdminDTO adminDTO,SessionStatus status) throws Exception {
 		
 		Map<String,String> map = new HashMap<>();
 		
-		admin = adminService.update(admin);
-		if(admin == null) {
+		adminDTO = adminService.update(adminDTO);
+		if(adminDTO == null) {
 			map.put("result", "fail");
 			return map;
 		}
@@ -81,18 +80,18 @@ public class AdminController {
 			return map;
 		}
 		
-		Admin admin = new Admin();
-		admin.setAdminId(id);
-		admin.setAdminPw(password);
-		admin = adminService.findById(admin);
+		AdminDTO adminDTO = new AdminDTO();
+		adminDTO.setAdminId(id);
+		adminDTO.setAdminPw(password);
+		adminDTO = adminService.findById(adminDTO);
 		
-		if(!SHA256TypeHandler.matches(password, admin.getAdminPw())) {
+		if(!SHA256TypeHandler.matches(password, adminDTO.getAdminPw())) {
 			map.put("result", "fail");
 			map.put("msg", "아이디 또는 비밀번호가 다릅니다.");
 			return map;
 		}
 		
-		AdminSession.CreateAdminSession(session, admin);
+		AdminSession.CreateAdminSession(session, adminDTO);
 		map.put("result", "success");
 		return map;
 	}

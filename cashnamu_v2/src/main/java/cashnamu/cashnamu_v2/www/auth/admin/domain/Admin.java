@@ -1,4 +1,4 @@
-package cashnamu.cashnamu_v2.www.auth.admin.service;
+package cashnamu.cashnamu_v2.www.auth.admin.domain;
 
 import java.util.Date;
 
@@ -9,12 +9,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name="cms_member")
-@Getter @Setter
+@Getter
 public class Admin {
 
 	/**아이디*/
@@ -39,5 +39,16 @@ public class Admin {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate;
+	
+	public Admin() {}
+
+	@Builder
+	public Admin(String adminId, String adminPw, String adminName, String access, String pageAccess) {
+		this.adminId = adminId;
+		this.adminPw = adminPw;
+		this.adminName = adminName;
+		this.access = access;
+		this.pageAccess = pageAccess;
+	}
 	
 }

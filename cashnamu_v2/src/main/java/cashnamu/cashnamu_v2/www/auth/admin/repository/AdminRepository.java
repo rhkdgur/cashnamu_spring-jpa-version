@@ -1,10 +1,10 @@
 package cashnamu.cashnamu_v2.www.auth.admin.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import cashnamu.cashnamu_v2.www.auth.admin.service.Admin;
+import cashnamu.cashnamu_v2.www.auth.admin.domain.Admin;
 
 /**
  * 
@@ -19,6 +19,6 @@ import cashnamu.cashnamu_v2.www.auth.admin.service.Admin;
  */
 public interface AdminRepository extends JpaRepository<Admin, String>,AdminCustomRepository{
 
-	Page<Admin> findByAdminName(String adminName,Pageable pageable);
+	List<Admin> findByAdminName(String adminName);
 
 }

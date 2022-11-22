@@ -1,4 +1,4 @@
-package cashnamu.cashnamu_v2.www.modules.member.service;
+package cashnamu.cashnamu_v2.www.modules.member.domain;
 
 import java.util.Date;
 
@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import cashnamu.cashnamu_v2.www.modules.member.service.LoginGubunType;
 import lombok.Getter;
 import lombok.Setter;
 

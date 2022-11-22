@@ -1,4 +1,4 @@
-package cashnamu.cashnamu_v2.www.modules.information.faq.service;
+package cashnamu.cashnamu_v2.www.modules.information.faq.domain;
 
 import java.util.Date;
 
@@ -12,8 +12,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import cashnamu.cashnamu_v2.www.modules.information.faq.service.FaqGubunType;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 
@@ -28,7 +29,7 @@ import lombok.Setter;
  */
 @Entity
 @Table(name="faq")
-@Getter @Setter
+@Getter
 public class Faq {
 
 	@Id @GeneratedValue
@@ -45,4 +46,13 @@ public class Faq {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate;
+
+	@Builder
+	public Faq(Long idx, String title, String content, FaqGubunType gubun) {
+		this.idx = idx;
+		this.title = title;
+		this.content = content;
+		this.gubun = gubun;
+	}
+	
 }

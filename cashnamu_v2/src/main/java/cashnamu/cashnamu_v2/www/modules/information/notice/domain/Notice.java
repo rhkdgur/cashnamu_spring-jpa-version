@@ -1,4 +1,4 @@
-package cashnamu.cashnamu_v2.www.modules.information.notice.service;
+package cashnamu.cashnamu_v2.www.modules.information.notice.domain;
 
 import java.util.Date;
 
@@ -10,8 +10,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 
@@ -26,7 +26,7 @@ import lombok.Setter;
  */
 @Entity
 @Table(name="notice_board")
-@Getter @Setter
+@Getter
 public class Notice {
 
 	@Id @GeneratedValue
@@ -43,4 +43,15 @@ public class Notice {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate;
+	
+	public Notice() {}
+
+	@Builder
+	public Notice(Long idx, String title, String content, int view) {
+		super();
+		this.idx = idx;
+		this.title = title;
+		this.content = content;
+		this.view = view;
+	}
 }

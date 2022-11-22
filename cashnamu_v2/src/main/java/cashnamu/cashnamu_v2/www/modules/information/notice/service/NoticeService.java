@@ -1,11 +1,14 @@
 package cashnamu.cashnamu_v2.www.modules.information.notice.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cashnamu.cashnamu_v2.www.modules.information.notice.domain.Notice;
+import cashnamu.cashnamu_v2.www.modules.information.notice.dto.NoticeDTO;
 import cashnamu.cashnamu_v2.www.modules.information.notice.repository.NoticeRepository;
 
 @Service
@@ -16,30 +19,29 @@ public class NoticeService {
 	
 	/**목록 조회*/
 	@Transactional(readOnly = true)
-	public Page<Notice> findAll(Pageable pageable){
-		return noticeRepository.findAll(pageable);
+	public List<NoticeDTO> findAll(){
+		List<Notice> list = noticeRepository.findAll();
+		return list.stream().map(m->new NoticeDTO(m)).collect(Collectors.toList());
 	}
 	
 	/**상세조회*/
 	@Transactional(readOnly = true)
-	public Notice findOne(Notice notice) {
-		return noticeRepository.findById(notice.getIdx()).get();
+	public NoticeDTO findOne(NoticeDTO noticeDTO) {
+		return new NoticeDTO(noticeRepository.findById(noticeDTO.getIdx()).get());
 	}
 	
 	/**등록*/
 	@Transactional
-	public void insertNotice(Notice notice) {
-		noticeRepository.save(notice);
+	public void insertNotice(NoticeDTO noticeDTO) {
+		noticeRepository.save(noticeDTO.toEntity());
 	}
 	
 	/**수정*/
 	@Transactional
-	public void updateNotice(Notice notice) {
-		Notice prev = new Notice();
-		prev.setIdx(notice.getIdx());
+	public void updateNotice(NoticeDTO noticeDTO) {
+		Notice prev = noticeDTO.toEntity();
 		prev = noticeRepository.findById(prev.getIdx()).get();
-		prev.setTitle(notice.getTitle());
-		prev.setContent(notice.getContent());
+		prev = noticeDTO.toEntity();
 		noticeRepository.save(prev);
 	}
 	
@@ -51,10 +53,10 @@ public class NoticeService {
 	
 	/**조회수 증가*/
 	@Transactional
-	public void viewPlusInsert(Notice notice) {
-		notice = noticeRepository.findById(notice.getIdx()).get();
+	public void viewPlusInsert(NoticeDTO noticeDTO) {
+		Notice notice = noticeRepository.findById(noticeDTO.getIdx()).get();
 		int view = notice.getView()+1;
-		notice.setView(view);
-		noticeRepository.save(notice);
+		noticeDTO.setView(view);
+		noticeRepository.save(noticeDTO.toEntity());
 	}
 }
