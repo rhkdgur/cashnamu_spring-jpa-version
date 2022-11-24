@@ -1,9 +1,8 @@
 package cashnamu.cashnamu_v2.www.modules.information.notice.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,26 +18,26 @@ public class NoticeService {
 	
 	/**목록 조회*/
 	@Transactional(readOnly = true)
-	public List<NoticeDTO> findAll(){
-		List<Notice> list = noticeRepository.findAll();
-		return list.stream().map(m->new NoticeDTO(m)).collect(Collectors.toList());
+	public Page<NoticeDTO> findAll(Pageable pageable) throws Exception{
+		Page<Notice> list = noticeRepository.findAll(pageable);
+		return list.map(m->new NoticeDTO(m));
 	}
 	
 	/**상세조회*/
 	@Transactional(readOnly = true)
-	public NoticeDTO findOne(NoticeDTO noticeDTO) {
+	public NoticeDTO findOne(NoticeDTO noticeDTO) throws Exception{
 		return new NoticeDTO(noticeRepository.findById(noticeDTO.getIdx()).get());
 	}
 	
 	/**등록*/
 	@Transactional
-	public void insertNotice(NoticeDTO noticeDTO) {
+	public void insertNotice(NoticeDTO noticeDTO) throws Exception{
 		noticeRepository.save(noticeDTO.toEntity());
 	}
 	
 	/**수정*/
 	@Transactional
-	public void updateNotice(NoticeDTO noticeDTO) {
+	public void updateNotice(NoticeDTO noticeDTO) throws Exception{
 		Notice prev = noticeDTO.toEntity();
 		prev = noticeRepository.findById(prev.getIdx()).get();
 		prev = noticeDTO.toEntity();
@@ -47,13 +46,13 @@ public class NoticeService {
 	
 	/**삭제*/
 	@Transactional
-	public void deleteNotice(Notice notice) {
-		noticeRepository.deleteById(notice.getIdx());
+	public void deleteNotice(NoticeDTO noticeDTO) throws Exception {
+		noticeRepository.deleteById(noticeDTO.getIdx());
 	}
 	
 	/**조회수 증가*/
 	@Transactional
-	public void viewPlusInsert(NoticeDTO noticeDTO) {
+	public void viewPlusInsert(NoticeDTO noticeDTO) throws Exception{
 		Notice notice = noticeRepository.findById(noticeDTO.getIdx()).get();
 		int view = notice.getView()+1;
 		noticeDTO.setView(view);

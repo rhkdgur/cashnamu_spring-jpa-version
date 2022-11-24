@@ -1,14 +1,17 @@
 package cashnamu.cashnamu_v2.www.modules.information.notice.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -27,6 +30,7 @@ import lombok.Getter;
 @Entity
 @Table(name="notice_board")
 @Getter
+@EntityListeners(AuditingEntityListener.class)//자동 날짜 생성
 public class Notice {
 
 	@Id @GeneratedValue
@@ -41,8 +45,8 @@ public class Notice {
 	@Column(nullable = true)
 	private int view;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createDate;
+	@CreatedDate
+	private LocalDateTime createDate;
 	
 	public Notice() {}
 

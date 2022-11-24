@@ -1,8 +1,8 @@
 package cashnamu.cashnamu_v2.www.cms.file.web;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cashnamu.cashnamu_v2.www.ResponseResultType;
 import cashnamu.cashnamu_v2.www.cms.file.dto.FileUploadDTO;
 import cashnamu.cashnamu_v2.www.cms.file.service.FileUploadService;
 import cashnamu.cashnamu_v2.www.cms.util.FileUploadUtil;
@@ -39,9 +40,8 @@ public class FileUploadController {
 	 * @throws Exception
 	 */
 	@GetMapping("/cms/file/list")
-	public ResponseEntity<List<FileUploadDTO>> selectFileUploadList(FileUploadDTO fileUploadDTO) throws Exception{	
-		List<FileUploadDTO> resultList = fileUploadService.selectFileUploadList(fileUploadDTO);
-		return new ResponseEntity<>(resultList,HttpStatus.OK);
+	public Page<FileUploadDTO> selectFileUploadList(FileUploadDTO fileUploadDTO,Pageable pageable) throws Exception{	
+		return fileUploadService.selectFileUploadList(fileUploadDTO,pageable);
 	}
 	
 	/**
@@ -63,14 +63,14 @@ public class FileUploadController {
 	 * @throws Exception
 	 */
 	@PostMapping("/cms/file/update")
-	public ResponseEntity<FileUploadDTO> uploadFileUpload(FileUploadDTO fileUploadDTO) throws Exception {
+	public ResponseEntity<String> uploadFileUpload(FileUploadDTO fileUploadDTO) throws Exception {
 		
 		FileUploadDTO updateUpload = fileUploadService.updateFileUpload(fileUploadDTO);
 		if(!ObjectUtils.isEmpty(updateUpload)) {
 			FileUploadUtil.makeFile(updateUpload.getPath());//다이렉트 경로 생성
-			return new ResponseEntity<FileUploadDTO>(updateUpload,HttpStatus.OK);
+			return new ResponseEntity<String>(ResponseResultType.UPD_SUCCESS.getDisplay(),HttpStatus.OK);
 		}else {
-			return new ResponseEntity<FileUploadDTO>(fileUploadDTO,HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(ResponseResultType.UPD_FAIL.getDisplay(),HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -81,13 +81,13 @@ public class FileUploadController {
 	 * @throws Exception
 	 */
 	@PostMapping("/cms/file/create")
-	public ResponseEntity<FileUploadDTO> createFileUpload(FileUploadDTO fileUploadDTO) throws Exception {
+	public ResponseEntity<String> createFileUpload(FileUploadDTO fileUploadDTO) throws Exception {
 		FileUploadDTO createUpload = fileUploadService.insertFileUpload(fileUploadDTO);
 		if(!ObjectUtils.isEmpty(createUpload)) {
 			FileUploadUtil.makeFile(createUpload.getPath());//다이렉트 경로 생성
-			return new ResponseEntity<FileUploadDTO>(createUpload,HttpStatus.OK);
+			return new ResponseEntity<String>(ResponseResultType.INS_SUCCESS.getDisplay(),HttpStatus.OK);
 		}else {
-			return new ResponseEntity<FileUploadDTO>(fileUploadDTO,HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(ResponseResultType.INS_FAIL.getDisplay(),HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -98,13 +98,13 @@ public class FileUploadController {
 	 * @throws Exception
 	 */
 	@PostMapping("/cms/file/delete")
-	public ResponseEntity<FileUploadDTO> deleteFileUpload(FileUploadDTO fileUploadDTO) throws Exception {
+	public ResponseEntity<String> deleteFileUpload(FileUploadDTO fileUploadDTO) throws Exception {
 		
 		try {
 			fileUploadService.deleteFileUpload(fileUploadDTO);
 		}catch (Exception e) {
-			return new ResponseEntity<FileUploadDTO>(fileUploadDTO,HttpStatus.BAD_REQUEST);	
+			return new ResponseEntity<String>(ResponseResultType.DEL_SUCCESS.getDisplay(),HttpStatus.BAD_REQUEST);	
 		}
-		return new ResponseEntity<FileUploadDTO>(fileUploadDTO,HttpStatus.OK);
+		return new ResponseEntity<String>(ResponseResultType.DEL_SUCCESS.getDisplay(),HttpStatus.OK);
 	}
 }

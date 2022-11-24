@@ -1,6 +1,6 @@
 package cashnamu.cashnamu_v2.www.modules.information.notice.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import cashnamu.cashnamu_v2.www.modules.information.notice.domain.Notice;
 import lombok.Getter;
@@ -17,7 +17,9 @@ public class NoticeDTO {
 	
 	private int view;
 	
-	private Date createDate;
+	private LocalDateTime createDate;
+	
+	public NoticeDTO() {}
 	
 	public NoticeDTO(Notice notice) {
 		this.idx = notice.getIdx();
@@ -27,7 +29,7 @@ public class NoticeDTO {
 		this.createDate = notice.getCreateDate();
 	}	 
 
-	public NoticeDTO(Long idx, String title, String content, int view, Date createDate) {
+	public NoticeDTO(Long idx, String title, String content, int view, LocalDateTime createDate) {
 		this.idx = idx;
 		this.title = title;
 		this.content = content;

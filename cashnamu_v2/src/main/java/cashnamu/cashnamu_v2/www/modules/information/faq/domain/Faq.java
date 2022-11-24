@@ -1,9 +1,11 @@
 package cashnamu.cashnamu_v2.www.modules.information.faq.domain;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import cashnamu.cashnamu_v2.www.modules.information.faq.service.FaqGubunType;
 import lombok.Builder;
@@ -30,6 +35,7 @@ import lombok.Getter;
 @Entity
 @Table(name="faq")
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 public class Faq {
 
 	@Id @GeneratedValue
@@ -44,8 +50,10 @@ public class Faq {
 	@Enumerated(EnumType.STRING)
 	private FaqGubunType gubun;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createDate;
+	@CreatedDate
+	private LocalDateTime createDate;
+	
+	public Faq() {}
 
 	@Builder
 	public Faq(Long idx, String title, String content, FaqGubunType gubun) {

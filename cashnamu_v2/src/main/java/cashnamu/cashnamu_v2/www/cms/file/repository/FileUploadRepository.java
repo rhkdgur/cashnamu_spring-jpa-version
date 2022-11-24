@@ -2,6 +2,8 @@ package cashnamu.cashnamu_v2.www.cms.file.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import cashnamu.cashnamu_v2.www.cms.file.domain.FileUpload;
@@ -22,6 +24,6 @@ public interface FileUploadRepository extends JpaRepository<FileUpload, Long>{
 	
 	List<FileUpload> findByPathContainingIgnoreCaseOrShortPathContainingIgnoreCase(String path, String shortPath);
 	
-	List<FileUpload> findByCodeContainingIgnoreCaseOrTitleContainingIgnoreCase(String code, String title);
+	Page<FileUpload> findByCodeContainingIgnoreCaseOrTitleContainingIgnoreCase(String code, String title,Pageable pageable);
 
 }

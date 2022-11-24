@@ -49,6 +49,7 @@ public class FileUpload{
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifyDate;
 	
+	public FileUpload() {}
 	
 	@Builder
 	public FileUpload(String code, String title, String shortPath, String path, String useYn) {

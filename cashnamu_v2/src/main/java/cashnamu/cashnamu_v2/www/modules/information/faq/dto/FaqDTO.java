@@ -1,5 +1,6 @@
 package cashnamu.cashnamu_v2.www.modules.information.faq.dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import cashnamu.cashnamu_v2.www.modules.information.faq.domain.Faq;
@@ -22,7 +23,9 @@ public class FaqDTO {
 	/**구분*/
 	private FaqGubunType gubun;
 	
-	private Date createDate;
+	private LocalDateTime createDate;
+	
+	public FaqDTO() {}
 	
 	public FaqDTO(Faq faq) {
 		this.idx = faq.getIdx();
@@ -32,7 +35,7 @@ public class FaqDTO {
 		this.createDate = faq.getCreateDate();
 	}
 
-	public FaqDTO(Long idx, String title, String content, FaqGubunType gubun, Date createDate) {
+	public FaqDTO(Long idx, String title, String content, FaqGubunType gubun, LocalDateTime createDate) {
 		this.idx = idx;
 		this.title = title;
 		this.content = content;

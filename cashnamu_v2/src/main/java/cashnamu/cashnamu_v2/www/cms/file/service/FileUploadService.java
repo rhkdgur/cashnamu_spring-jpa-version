@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,14 +32,10 @@ public class FileUploadService {
 	
 	/**목록조회*/
 	@Transactional(readOnly = true)
-	public List<FileUploadDTO> selectFileUploadList(FileUploadDTO fileUploadDTO){
+	public Page<FileUploadDTO> selectFileUploadList(FileUploadDTO fileUploadDTO,Pageable pageable){
 		FileUpload fileUpload = fileUploadDTO.toEntity();
-		List<FileUpload> list = fileUploadRepository.findByCodeContainingIgnoreCaseOrTitleContainingIgnoreCase(fileUpload.getCode(),fileUpload.getTitle());
-		List<FileUploadDTO> resultList = list.stream()
-				.map(m-> new FileUploadDTO(m.getCode(),m.getTitle(),m.getShortPath(),m.getPath(),m.getUseYn()))
-				.collect(Collectors.toList());
-		
-		return resultList;
+		Page<FileUpload> list = fileUploadRepository.findByCodeContainingIgnoreCaseOrTitleContainingIgnoreCase(fileUpload.getCode(),fileUpload.getTitle(),pageable);
+		return list.map(m-> new FileUploadDTO(m.getCode(),m.getTitle(),m.getShortPath(),m.getPath(),m.getUseYn()));
 	}
 	
 	/**상세*/

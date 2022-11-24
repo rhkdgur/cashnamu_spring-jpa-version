@@ -1,5 +1,6 @@
 package cashnamu.cashnamu_v2.www.auth.admin.dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import cashnamu.cashnamu_v2.www.auth.admin.domain.Admin;
@@ -24,7 +25,7 @@ public class AdminDTO {
 	/**페이지 접근권한*/
 	private String pageAccess;
 	
-	private Date createDate;
+	private LocalDateTime createDate;
 	
 	//DTO -> entity
 	public Admin toEntity() {
@@ -46,7 +47,7 @@ public class AdminDTO {
 		this.createDate = admin.getCreateDate();
 	}
 
-	public AdminDTO(String adminId, String adminPw, String adminName, String access, String pageAccess,Date createDate) {
+	public AdminDTO(String adminId, String adminPw, String adminName, String access, String pageAccess,LocalDateTime createDate) {
 		this.adminId = adminId;
 		this.adminPw = adminPw;
 		this.adminName = adminName;

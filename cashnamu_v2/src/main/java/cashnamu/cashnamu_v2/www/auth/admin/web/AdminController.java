@@ -1,12 +1,13 @@
 package cashnamu.cashnamu_v2.www.auth.admin.web;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,31 +15,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.support.SessionStatus;
 
+import cashnamu.cashnamu_v2.www.BaseController;
 import cashnamu.cashnamu_v2.www.auth.admin.AdminSession;
 import cashnamu.cashnamu_v2.www.auth.admin.dto.AdminDTO;
 import cashnamu.cashnamu_v2.www.auth.admin.service.AdminService;
 import cashnamu.cashnamu_v2.www.auth.util.SHA256TypeHandler;
 
 @RestController
-public class AdminController {
+public class AdminController extends BaseController{
 
 	@Autowired
 	AdminService adminService;
 	
 	
-	@GetMapping("admin")
-	public List<AdminDTO> selectAdminList(AdminDTO adminDTO,
-								  @RequestParam Map<String,String> paramUtil
+	@GetMapping(MGN_URL+"/admin/list")
+	public Page<AdminDTO> selectAdminList(AdminDTO adminDTO,
+								  	Pageable pageable
 								  ) throws Exception {		
-		return adminService.findByAdmins();
+		return adminService.findByAdmins(pageable);
 	}
 	
-	@GetMapping(value="/admin/view")
+	@GetMapping(MGN_URL+"/admin/view")
 	public AdminDTO selectAdmin(@RequestBody AdminDTO adminDTO,SessionStatus status) throws Exception {		
 		return adminService.findById(adminDTO);
 	}
 	
-	@PostMapping(value="/admin/create/action")
+	@PostMapping(MGN_URL+"/admin/create/action")
 	public Map<String,String> createAdmin(@RequestBody AdminDTO adminDTO,SessionStatus status) throws Exception {
 		Map<String,String> map = new HashMap<>();
 		adminDTO = adminService.insert(adminDTO);
@@ -51,7 +53,7 @@ public class AdminController {
 		return map;
 	}
 	
-	@PostMapping(value="/admin/update/action")
+	@PostMapping(MGN_URL+"/admin/update/action")
 	public Map<String,String> updateAdmin(@RequestBody AdminDTO adminDTO,SessionStatus status) throws Exception {
 		
 		Map<String,String> map = new HashMap<>();
@@ -67,7 +69,7 @@ public class AdminController {
 		return map;
 	}
 	
-	@PostMapping(value="/admin/login")
+	@PostMapping(MGN_URL+"/admin/login")
 	public Map<String,String> adminLogin(@RequestParam("id") String id,
 							 @RequestParam("password") String password,
 							 HttpSession session ) throws Exception {
