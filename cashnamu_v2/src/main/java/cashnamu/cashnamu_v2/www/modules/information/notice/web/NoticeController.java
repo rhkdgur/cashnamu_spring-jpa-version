@@ -76,26 +76,6 @@ public class NoticeController extends BaseController{
 	}
 	
 	/**
-	 * 수정
-	 * @param noticeDTO
-	 * @param status
-	 * @return
-	 * @throws Exception
-	 */
-	@PostMapping(MGN_URL+"/notice/act/upd")
-	public ResponseEntity<String> updateNotice(NoticeDTO noticeDTO,SessionStatus status) throws Exception {
-		
-		try {
-			noticeService.updateNotice(noticeDTO);
-		}catch (Exception e) {
-			return new ResponseEntity<String>(ResponseResultType.UPD_FAIL.getDisplay(), HttpStatus.BAD_REQUEST);
-		}
-		
-		status.setComplete();
-		return new ResponseEntity<String>(ResponseResultType.UPD_SUCCESS.getDisplay(), HttpStatus.OK);
-	}
-	
-	/**
 	 * 삭제
 	 * @param noticeDTO
 	 * @param status

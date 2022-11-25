@@ -71,26 +71,6 @@ public class FaqController extends BaseController{
 	}
 	
 	/**
-	 * 수정
-	 * @param faqDTO
-	 * @param status
-	 * @return
-	 * @throws Exception
-	 */
-	@PostMapping(MGN_URL+"/faq/action/upd")
-	public ResponseEntity<String> updateFaq(FaqDTO faqDTO,SessionStatus status) throws Exception{
-		
-		try {
-			faqService.updateFaq(faqDTO);
-		}catch (Exception e) {
-			return new ResponseEntity<String>(ResponseResultType.UPD_FAIL.getDisplay(), HttpStatus.BAD_REQUEST);
-		}
-		
-		status.setComplete();
-		return new ResponseEntity<String>(ResponseResultType.UPD_SUCCESS.getDisplay(), HttpStatus.OK);
-	}
-	
-	/**
 	 * 삭제
 	 * @param faqDTO
 	 * @param status

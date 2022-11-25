@@ -4,8 +4,10 @@ import java.time.LocalDateTime;
 
 import cashnamu.cashnamu_v2.www.cms.publiccode.domain.PublicCode;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class PublicCodeDTO {
 
 	private String pubCd; 
@@ -28,7 +30,6 @@ public class PublicCodeDTO {
 	
 	private LocalDateTime modifyDate;
 	
-	
 	//== 엔티티 변환 ==//
 	public PublicCode toEntity() {
 		return PublicCode.builder()
@@ -39,7 +40,7 @@ public class PublicCodeDTO {
 				.useYn(useYn)
 				.ord(ord)
 				.createId(createId)
-				.modifyDate(modifyDate)
+				.modifyId(modifyId)
 				.build();
 	}
 

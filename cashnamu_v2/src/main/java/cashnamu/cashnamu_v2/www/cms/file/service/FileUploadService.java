@@ -1,8 +1,5 @@
 package cashnamu.cashnamu_v2.www.cms.file.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,28 +42,22 @@ public class FileUploadService {
 		return new FileUploadDTO(fileUploadRepository.findById(fileUpload.getSno()).get());
 	}
 	
-	/**등록*/
+	/**등록
+	 * @throws IllegalAccessException */
 	@Transactional
-	public FileUploadDTO insertFileUpload(FileUploadDTO fileUploadDTO) {
-		if(checkFilePath(fileUploadDTO) > 0) {
-			return null;
+	public FileUploadDTO insertFileUpload(FileUploadDTO fileUploadDTO) throws Exception {
+		if(fileUploadDTO.getCode().isEmpty()) {
+			if(checkFilePath(fileUploadDTO) > 0) {
+				throw new IllegalAccessException();
+			}
 		}
 		FileUpload fileUpload = fileUploadDTO.toEntity();
 		return new FileUploadDTO(fileUploadRepository.save(fileUpload));
 	}
 	
-	/**수정*/
-	@Transactional
-	public FileUploadDTO updateFileUpload(FileUploadDTO fileUploadDTO) {
-		FileUpload fileUpload = fileUploadDTO.toEntity();
-		FileUpload prev = fileUploadRepository.findById(fileUpload.getSno()).get();
-		prev = fileUpload;
-		return new FileUploadDTO(fileUploadRepository.save(prev));
-	}
-	
 	/**삭제*/
 	@Transactional
-	public void deleteFileUpload(FileUploadDTO fileUploadDTO) {
+	public void deleteFileUpload(FileUploadDTO fileUploadDTO) throws Exception{
 		FileUpload fileUpload = fileUploadDTO.toEntity();
 		fileUploadRepository.delete(fileUpload);
 	}

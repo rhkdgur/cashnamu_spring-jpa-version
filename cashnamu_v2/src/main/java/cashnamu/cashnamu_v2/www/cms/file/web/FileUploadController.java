@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cashnamu.cashnamu_v2.www.BaseController;
 import cashnamu.cashnamu_v2.www.ResponseResultType;
 import cashnamu.cashnamu_v2.www.cms.file.dto.FileUploadDTO;
 import cashnamu.cashnamu_v2.www.cms.file.service.FileUploadService;
@@ -27,7 +28,7 @@ import cashnamu.cashnamu_v2.www.cms.util.FileUploadUtil;
 * 2022.11.22
  */
 @RestController
-public class FileUploadController {
+public class FileUploadController  extends BaseController{
 
 	@Autowired
 	FileUploadService fileUploadService;
@@ -39,7 +40,7 @@ public class FileUploadController {
 	 * @return
 	 * @throws Exception
 	 */
-	@GetMapping("/cms/file/list")
+	@GetMapping(MGN_URL+"/cms/file/list")
 	public Page<FileUploadDTO> selectFileUploadList(FileUploadDTO fileUploadDTO,Pageable pageable) throws Exception{	
 		return fileUploadService.selectFileUploadList(fileUploadDTO,pageable);
 	}
@@ -50,28 +51,10 @@ public class FileUploadController {
 	 * @return
 	 * @throws Exception
 	 */
-	@GetMapping("/cms/file/view")
+	@GetMapping(MGN_URL+"/cms/file/view")
 	public ResponseEntity<FileUploadDTO> viewFileUpload(FileUploadDTO fileUploadDTO) throws Exception {
 		fileUploadDTO = fileUploadService.selectFileUpload(fileUploadDTO);
 		return new ResponseEntity<>(fileUploadDTO,HttpStatus.OK);
-	}
-	
-	/**
-	 * 파일 수정
-	 * @param fileUpload
-	 * @return
-	 * @throws Exception
-	 */
-	@PostMapping("/cms/file/update")
-	public ResponseEntity<String> uploadFileUpload(FileUploadDTO fileUploadDTO) throws Exception {
-		
-		FileUploadDTO updateUpload = fileUploadService.updateFileUpload(fileUploadDTO);
-		if(!ObjectUtils.isEmpty(updateUpload)) {
-			FileUploadUtil.makeFile(updateUpload.getPath());//다이렉트 경로 생성
-			return new ResponseEntity<String>(ResponseResultType.UPD_SUCCESS.getDisplay(),HttpStatus.OK);
-		}else {
-			return new ResponseEntity<String>(ResponseResultType.UPD_FAIL.getDisplay(),HttpStatus.NOT_FOUND);
-		}
 	}
 	
 	/**
@@ -80,7 +63,7 @@ public class FileUploadController {
 	 * @return
 	 * @throws Exception
 	 */
-	@PostMapping("/cms/file/create")
+	@PostMapping(MGN_URL+"/cms/file/act/ins")
 	public ResponseEntity<String> createFileUpload(FileUploadDTO fileUploadDTO) throws Exception {
 		FileUploadDTO createUpload = fileUploadService.insertFileUpload(fileUploadDTO);
 		if(!ObjectUtils.isEmpty(createUpload)) {
@@ -97,7 +80,7 @@ public class FileUploadController {
 	 * @return
 	 * @throws Exception
 	 */
-	@PostMapping("/cms/file/delete")
+	@PostMapping(MGN_URL+"/cms/file/act/del")
 	public ResponseEntity<String> deleteFileUpload(FileUploadDTO fileUploadDTO) throws Exception {
 		
 		try {

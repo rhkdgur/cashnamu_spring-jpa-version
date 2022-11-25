@@ -35,15 +35,6 @@ public class NoticeService {
 		noticeRepository.save(noticeDTO.toEntity());
 	}
 	
-	/**수정*/
-	@Transactional
-	public void updateNotice(NoticeDTO noticeDTO) throws Exception{
-		Notice prev = noticeDTO.toEntity();
-		prev = noticeRepository.findById(prev.getIdx()).get();
-		prev = noticeDTO.toEntity();
-		noticeRepository.save(prev);
-	}
-	
 	/**삭제*/
 	@Transactional
 	public void deleteNotice(NoticeDTO noticeDTO) throws Exception {

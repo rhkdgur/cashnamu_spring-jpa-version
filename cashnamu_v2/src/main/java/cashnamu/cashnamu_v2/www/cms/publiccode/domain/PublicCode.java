@@ -52,10 +52,12 @@ public class PublicCode {
 	
 	@Comment("사용여부")
 	@Column(columnDefinition = "char", length = 1)
-	@ColumnDefault("Y")
+	@ColumnDefault("'Y'")
 	private String useYn;
 	
 	@Comment("정렬순서")
+	@Column(nullable = true)
+	@ColumnDefault("0")
 	private int ord;
 	
 	@Comment("등록아이디")
@@ -71,11 +73,10 @@ public class PublicCode {
 	
 	@LastModifiedDate
 	private LocalDateTime modifyDate;
-
+	
 	@Builder
 	public PublicCode(String pubCd, String parentCd, String title, String remark, String useYn, int ord,
 			String createId, String modifyId, LocalDateTime createDate, LocalDateTime modifyDate) {
-		super();
 		this.pubCd = pubCd;
 		this.parentCd = parentCd;
 		this.title = title;

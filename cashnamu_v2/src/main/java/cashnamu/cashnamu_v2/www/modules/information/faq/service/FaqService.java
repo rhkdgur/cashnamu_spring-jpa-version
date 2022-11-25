@@ -25,15 +25,6 @@ public class FaqService {
 		return faq.getIdx();
 	}
 	
-	/**수정*/
-	@Transactional
-	public void updateFaq(FaqDTO faqDTO) throws Exception{
-		Faq prev = faqDTO.toEntity();
-		prev = faqRepository.findById(prev.getIdx()).get();
-		prev = faqDTO.toEntity();
-		faqRepository.save(prev);
-	}
-	
 	/**삭제*/
 	@Transactional
 	public void deleteFaq(FaqDTO faqDTO) throws Exception{
