@@ -4,12 +4,14 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +19,7 @@ import lombok.Getter;
 @Entity
 @Table(name="cms_file_upload")
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 public class FileUpload{
 
 	/**일련번호*/
@@ -43,10 +46,10 @@ public class FileUpload{
 	@Column(columnDefinition = "char",length = 1)
 	private String useYn;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@CreatedDate
 	private Date createDate;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@LastModifiedDate
 	private Date modifyDate;
 	
 	public FileUpload() {}

@@ -12,7 +12,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import cashnamu.cashnamu_v2.www.auth.admin.service.Admin;
+import cashnamu.cashnamu_v2.www.auth.admin.domain.Admin;
 import cashnamu.cashnamu_v2.www.auth.admin.service.AdminService;
 
 @RunWith(SpringRunner.class)
@@ -35,21 +35,21 @@ class AdminServiceTest {
 	@Transactional
 	void AdminTest() {
 		try {
-		Admin admin = new Admin();
-		admin.setAdminId("test");
-		admin.setAdminPw("test");
-		admin.setAdminName("test1");
-		
-		adminService.insert(admin);
-		
-		System.out.println("@@@@@ : "+admin.getAdminName());
-		
-		em.flush();
-		em.clear();
-		
-		admin.setAdminName("test2");
-		Admin prev = adminService.update(admin);
-		System.out.println("@@@@@@@@@@@@ : "+prev.getAdminName());
+//		Admin admin = new Admin();
+//		admin.setAdminId("test");
+//		admin.setAdminPw("test");
+//		admin.setAdminName("test1");
+//		
+//		adminService.insert(admin);
+//		
+//		System.out.println("@@@@@ : "+admin.getAdminName());
+//		
+//		em.flush();
+//		em.clear();
+//		
+//		admin.setAdminName("test2");
+//		Admin prev = adminService.update(admin);
+//		System.out.println("@@@@@@@@@@@@ : "+prev.getAdminName());
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

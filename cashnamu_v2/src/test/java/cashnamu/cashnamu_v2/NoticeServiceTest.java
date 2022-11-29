@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import cashnamu.cashnamu_v2.www.modules.information.notice.service.Notice;
+import cashnamu.cashnamu_v2.www.modules.information.notice.domain.Notice;
 import cashnamu.cashnamu_v2.www.modules.information.notice.service.NoticeService;
 
 @RunWith(SpringRunner.class)
@@ -34,11 +34,11 @@ class NoticeServiceTest {
 	@Test
 	void NoticeTest() {
 	
-		Notice notice = new Notice();
-		notice.setTitle("안녕");
-		notice.setContent("글이야");
-		
-		noticeService.insertNotice(notice);
+//		Notice notice = new Notice();
+//		notice.setTitle("안녕");
+//		notice.setContent("글이야");
+//		
+//		noticeService.insertNotice(notice);
 		
 //		noticeService.viewPlusInsert(notice);
 	}
