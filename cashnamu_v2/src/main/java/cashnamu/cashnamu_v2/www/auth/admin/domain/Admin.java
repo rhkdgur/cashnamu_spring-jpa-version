@@ -15,7 +15,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Entity
-@Table(name="cms_member")
+@Table(name="cms_admin")
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 public class Admin {

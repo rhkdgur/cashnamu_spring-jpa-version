@@ -15,4 +15,6 @@ public class BaseController {
 
 	protected static final String MGN_URL = "/mgn";
 	
+	
+	
 }
