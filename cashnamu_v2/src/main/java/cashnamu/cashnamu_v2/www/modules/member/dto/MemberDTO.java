@@ -52,6 +52,9 @@ public class MemberDTO {
 	/**계좌번호*/
 	private String accountNumber;
 	
+	/**마케팅 정보*/
+	private String marketingYn;
+	
 	/**최근 접속 일자*/
 	private Date finalConnectTime;
 	
@@ -75,6 +78,7 @@ public class MemberDTO {
 		this.accountNumber = member.getAccount().getAccountNumber();
 		this.finalConnectTime = member.getFinalConnectTime();
 		this.createDate = member.getCreateDate();
+		this.marketingYn = member.getMarketingYn();
 	}
 	
 	

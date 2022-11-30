@@ -74,7 +74,6 @@ public class Member {
 	/** 로그인 구분*/
 	@Enumerated(EnumType.STRING)
 	@Comment("로그인 구분")
-	@Column(name="gubun")
 	private LoginGubunType gubun;
 	
 	/** 성별*/
@@ -91,6 +90,10 @@ public class Member {
 	@Column(length = 100)
 	@Comment("본인인증 키")
 	private String authKey;
+	
+	@Column(columnDefinition = "char", length = 1)
+	@Comment("마케팅 광고 동의여부")
+	private String marketingYn;
 	
 	/**은행정보*/
 	@Embedded
