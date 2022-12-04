@@ -76,6 +76,7 @@ public class GoogleOauthController extends BaseOauthController{
 			}
 			
 			MemberSession.CreateUserSession(request.getSession(), prevVO);
+			memberService.updateFinalConnectTime(memberDTO);
 		}else {
 			String name = (String)json.get("name");
 			if(name == null) {

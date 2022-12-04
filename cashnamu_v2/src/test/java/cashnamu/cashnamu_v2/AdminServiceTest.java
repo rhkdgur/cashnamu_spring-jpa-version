@@ -12,7 +12,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import cashnamu.cashnamu_v2.www.auth.admin.domain.Admin;
 import cashnamu.cashnamu_v2.www.auth.admin.service.AdminService;
 
 @RunWith(SpringRunner.class)

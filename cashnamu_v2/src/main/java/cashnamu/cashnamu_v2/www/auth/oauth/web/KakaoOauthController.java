@@ -41,7 +41,7 @@ public class KakaoOauthController extends BaseOauthController{
 	private Map<String,String> kakaoOauthService;
 	
 	@Autowired
-	private MemberService memberSerivce;
+	private MemberService memberService;
 	
 	
 	@GetMapping("/oauth/kakao/response.do")
@@ -68,7 +68,7 @@ public class KakaoOauthController extends BaseOauthController{
 		
 		memberDTO.setId((String)json.get("email"));
 		memberDTO.setDkey((String)json.get("id"));
-		MemberDTO prevVO = memberSerivce.selectMember(memberDTO);
+		MemberDTO prevVO = memberService.selectMember(memberDTO);
 		
 		if(prevVO != null) {
 			//회원탈퇴 정보일 경우
@@ -77,6 +77,7 @@ public class KakaoOauthController extends BaseOauthController{
 			}
 			
 			MemberSession.CreateUserSession(request.getSession(), prevVO);
+			memberService.updateFinalConnectTime(memberDTO);
 		}else {
 			String name = (String)json.get("nickname");
 			if(name == null) {

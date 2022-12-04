@@ -71,4 +71,10 @@ public class MemberService {
 		Member member = Member.ByMemberDTOBuild().memberDTO(memberDTO).build();
 		memberRepository.delete(member);
 	}
+	
+	
+	@Transactional
+	public void updateFinalConnectTime(MemberDTO memberDTO) throws Exception {
+		memberRepository.recentConnectUpdate(memberDTO.getDkey());
+	}
 }

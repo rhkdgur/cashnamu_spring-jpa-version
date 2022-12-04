@@ -76,6 +76,7 @@ public class NaverOauthController extends BaseOauthController{
 				}
 				
 				MemberSession.CreateUserSession(request.getSession(),prevVO);
+				memberService.updateFinalConnectTime(memberDTO);
 			}else {
 				String name = (String)res.get("name");
 				if(name == null) {
