@@ -8,8 +8,10 @@ import javax.persistence.Enumerated;
 import cashnamu.cashnamu_v2.www.modules.member.domain.Member;
 import cashnamu.cashnamu_v2.www.modules.member.service.LoginGubunType;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class MemberDTO {
 
 	/**회원 아이디*/
