@@ -12,9 +12,11 @@ public class CategoryDescDTO {
 	
 	private String categCd;
 	
-	private String col1Cd;
+	private String ct1Cd;
 	
-	private String col2Cd;
+	private String ct2Cd;
+	
+	private String ct3Cd;
 	
 	private int level;
 	
@@ -30,8 +32,9 @@ public class CategoryDescDTO {
 
 	public CategoryDescDTO(CategoryDesc entity) {
 		this.categCd = entity.getCategCd();
-		this.col1Cd = entity.getCol1Cd();
-		this.col2Cd = entity.getCol2Cd();
+		this.ct1Cd = entity.getCt1Cd();
+		this.ct2Cd = entity.getCt2Cd();
+		this.ct3Cd = entity.getCt3Cd();
 		this.level = entity.getLevel();
 		this.title = entity.getTitle();
 		this.ord = entity.getOrd();

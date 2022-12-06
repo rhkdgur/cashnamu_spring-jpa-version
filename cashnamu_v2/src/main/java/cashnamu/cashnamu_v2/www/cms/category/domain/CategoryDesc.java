@@ -40,10 +40,13 @@ public class CategoryDesc {
 	private String categCd;
 	
 	@Comment("카테고리1")
-	private String col1Cd;
+	private String ct1Cd;
 	
 	@Comment("카테고리2")
-	private String col2Cd;
+	private String ct2Cd;
+	
+	@Comment("카테고리3")
+	private String ct3Cd;
 	
 	@Comment("카테고리 레벨")
 	private int level;
@@ -67,8 +70,9 @@ public class CategoryDesc {
 	@Builder	
 	public CategoryDesc(CategoryDescDTO dto) {
 		this.categCd = dto.getCategCd();
-		this.col1Cd = dto.getCol1Cd();
-		this.col2Cd = dto.getCol2Cd();
+		this.ct1Cd = dto.getCt1Cd();
+		this.ct2Cd = dto.getCt2Cd();
+		this.ct3Cd = dto.getCt3Cd();
 		this.level = dto.getLevel();
 		this.title = dto.getTitle();
 		this.ord = dto.getOrd();
